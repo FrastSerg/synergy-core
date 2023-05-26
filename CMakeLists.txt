@@ -293,17 +293,20 @@ if (UNIX)
 
     # For config.h, set some static values; it may be a good idea to make
     # these values dynamic for non-standard UNIX compilers.
-    set (ACCEPT_TYPE_ARG3 socklen_t)
-    set (HAVE_CXX_BOOL 1)
-    set (HAVE_CXX_CASTS 1)
-    set (HAVE_CXX_EXCEPTIONS 1)
-    set (HAVE_CXX_MUTABLE 1)
-    set (HAVE_CXX_STDLIB 1)
+
+    ### Unused
+    # set (ACCEPT_TYPE_ARG3 socklen_t)
+    # set (HAVE_CXX_BOOL 1)
+    # set (HAVE_CXX_CASTS 1)
+    # set (HAVE_CXX_EXCEPTIONS 1)
+    # set (HAVE_CXX_MUTABLE 1)
+    # set (HAVE_CXX_STDLIB 1)
+    # set (STDC_HEADERS 1)
+
     set (HAVE_PTHREAD_SIGNAL 1)
     set (SELECT_TYPE_ARG1 int)
     set (SELECT_TYPE_ARG234 " (fd_set *)")
     set (SELECT_TYPE_ARG5 " (struct timeval *)")
-    set (STDC_HEADERS 1)
     set (TIME_WITH_SYS_TIME 1)
     set (HAVE_SOCKLEN_T 1)
 

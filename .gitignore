@@ -1,5 +1,4 @@
 .vscode
-config.h
 .DS_Store
 *.pyc
 *.o
@@ -32,4 +31,4 @@ flatpak/build
 flatpak/export
 flatpak/synergy.desktop
 flatpak/*.flatpak
-/cbeResults
+/bincbe

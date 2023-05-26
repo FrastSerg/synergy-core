@@ -20,7 +20,7 @@
 #include "arch/unix/ArchSystemUnix.h"
 
 #include <sys/utsname.h>
-#ifndef __APPLE__
+#if 0 //ndef __APPLE__
 #include <QtDBus>
 #endif
 
@@ -83,7 +83,7 @@ ArchSystemUnix::getLibsUsed(void) const
     return "not implemented.\nuse lsof on shell";
 }
 
-#ifndef __APPLE__
+#if 0 //ndef __APPLE__
 bool
 ArchSystemUnix::DBusInhibitScreenCall(InhibitScreenServices serviceID, bool state, std::string& error)
 {
