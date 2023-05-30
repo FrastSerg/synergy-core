@@ -32,10 +32,10 @@ public:
     SecureClientSocket& operator=(SecureClientSocket &&) =delete;
 
     // IDataSocket overrides
-    void        connect(const NetworkAddress&) override;
+    virtual void        connect(const NetworkAddress&) override;
 
-    ISocketMultiplexerJob* newJob();
-    bool                isFatal() const { return m_fatal; }
+    virtual ISocketMultiplexerJob* newJob();
+    bool                isFatal() const override { return m_fatal; }
     void                setFatal(int code);
     int                 getRetry(int errorCode, int retry) const;
     bool                isSecureReady() const;

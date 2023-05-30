@@ -2,11 +2,11 @@
  * synergy -- mouse and keyboard sharing utility
  * Copyright (C) 2012-2016 Symless Ltd.
  * Copyright (C) 2004 Chris Schoeneman
- * 
+ *
  * This package is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
  * found in the file LICENSE that should have accompanied this file.
- * 
+ *
  * This package is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -76,16 +76,16 @@ public:
     bool        fakeKeyUp(KeyButton button) override;
     void        fakeAllKeysUp() override;
     bool        fakeMediaKey(KeyID id) override;
-    
+
     bool        isKeyDown(KeyButton) const override;
     KeyModifierMask
                         getActiveModifiers() const override;
     // Left abstract
-    virtual bool        fakeCtrlAltDel() = 0;
+    virtual bool        fakeCtrlAltDel() override = 0;
     virtual KeyModifierMask
                         pollActiveModifiers() const = 0;
     virtual SInt32        pollActiveGroup() const = 0;
-    virtual void        pollPressedKeys(KeyButtonSet& pressedKeys) const = 0;
+    virtual void        pollPressedKeys(KeyButtonSet& pressedKeys) const override = 0;
 
     SInt32 getKeyState(KeyButton keyButton) { return m_keys[keyButton]; }
 
@@ -161,7 +161,7 @@ public:
         AddActiveModifierContext& operator=(const AddActiveModifierContext&);
     };
 private:
-    
+
     class ButtonToKeyLess {
     public:
         bool operator()(const synergy::KeyMap::ButtonToKeyMap::value_type& a,

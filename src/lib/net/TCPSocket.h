@@ -2,11 +2,11 @@
  * synergy -- mouse and keyboard sharing utility
  * Copyright (C) 2012-2016 Symless Ltd.
  * Copyright (C) 2002 Chris Schoeneman
- * 
+ *
  * This package is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
  * found in the file LICENSE that should have accompanied this file.
- * 
+ *
  * This package is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -46,24 +46,24 @@ public:
     TCPSocket& operator=(TCPSocket &&) =delete;
 
     // ISocket overrides
-    virtual void        bind(const NetworkAddress&);
-    virtual void        close();
-    virtual void*        getEventTarget() const;
+    virtual void        bind(const NetworkAddress&)         override;
+    virtual void        close()                             override;
+    virtual void*       getEventTarget() const              override;
 
     // IStream overrides
-    virtual UInt32        read(void* buffer, UInt32 n);
-    virtual void        write(const void* buffer, UInt32 n);
-    virtual void        flush();
-    virtual void        shutdownInput();
-    virtual void        shutdownOutput();
-    virtual bool        isReady() const;
-    virtual bool        isFatal() const;
-    virtual UInt32        getSize() const;
+    virtual UInt32      read(void* buffer, UInt32 n)        override;
+    virtual void        write(const void* buffer, UInt32 n) override;
+    virtual void        flush()                             override;
+    virtual void        shutdownInput()                     override;
+    virtual void        shutdownOutput()                    override;
+    virtual bool        isReady() const                     override;
+    virtual bool        isFatal() const                     override;
+    virtual UInt32      getSize() const                     override;
 
     // IDataSocket overrides
-    virtual void        connect(const NetworkAddress&);
+    virtual void        connect(const NetworkAddress&)      override;
 
-    
+    // TCPSocket
     virtual ISocketMultiplexerJob*
                         newJob();
 
@@ -73,14 +73,14 @@ protected:
         kRetry,            //!< Retry the same job
         kNew            //!< Require a new job
     };
-    
+
     ArchSocket            getSocket() { return m_socket; }
     IEventQueue*        getEvents() { return m_events; }
-    virtual EJobResult    doRead();
-    virtual EJobResult    doWrite();
+    virtual EJobResult  doRead();
+    virtual EJobResult  doWrite();
 
     void                setJob(ISocketMultiplexerJob*);
-    
+
     bool                isReadable() { return m_readable; }
     bool                isWritable() { return m_writable; }
 
@@ -112,7 +112,7 @@ protected:
     IEventQueue*        m_events;
     StreamBuffer        m_inputBuffer;
     StreamBuffer        m_outputBuffer;
-    
+
 private:
     Mutex                m_mutex;
     ArchSocket            m_socket;

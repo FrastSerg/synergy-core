@@ -20,7 +20,8 @@ ifeq (Windows, $(.TARGET_OS))
   .LOADLIBES=Advapi32.lib Shell32.lib Gdi32.lib
 
 else ifeq (Darwin, $(.TARGET_OS))
-  export OSX_FRAMEWORKS=ScreenSaver IOKit ApplicationServices Foundation Carbon UserNotifications
+  export OSX_FRAMEWORKS=ScreenSaver IOKit ApplicationServices Foundation Carbon UserNotifications Foundation CoreData Cocoa
+  export MIN_OS_VERSION=13.0
   .MACRO_DEFS += WINAPI_CARBON=1 _THREAD_SAFE
 
 else ifeq (Linux, $(.TARGET_OS))
