@@ -1,4 +1,5 @@
 .vscode
+config.h
 .DS_Store
 *.pyc
 *.o
@@ -31,4 +32,6 @@ flatpak/build
 flatpak/export
 flatpak/synergy.desktop
 flatpak/*.flatpak
+*.code-workspace
+*.idx
 /bincbe

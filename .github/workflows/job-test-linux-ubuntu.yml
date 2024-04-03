@@ -1,4 +1,4 @@
-name: Ubuntu
+name: Test Ubuntu
 
 on:
   push:
@@ -6,28 +6,34 @@ on:
   pull_request:
     branches: [master]
 
+concurrency:
+  group: "${{ github.workflow }}-${{ github.ref || github.run_id }}"
+  cancel-in-progress: true
+
 jobs:
-  build-arch64:
+  test-linux-ubuntu:
+    name: ubuntu${{ matrix.distro }}
     runs-on: ubuntu-latest
     container: symless/synergy-core:ubuntu${{ matrix.distro }}
+    timeout-minutes: 10
+
     env:
       GIT_COMMIT: ${{ github.sha }}
+
     strategy:
       matrix:
-        distro: ['22.04', '20.04', '18.04']
-        flag: ['-j']
-        include:
-          - distro: '16.04'
-            flag: '-j1'
-
-
-    name: ubuntu${{ matrix.distro }}
+        distro:
+          - "22.04"
+          - "20.04"
+        flag:
+          - "-j"
 
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout git repo
+        uses: actions/checkout@v3
         with:
-          submodules: 'recursive'
-      
+          submodules: "recursive"
+
       - name: Work around https://github.com/actions/checkout/issues/766
         run: |
           git config --global --add safe.directory "$GITHUB_WORKSPACE"
