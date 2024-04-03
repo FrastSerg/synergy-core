@@ -2,11 +2,11 @@
  * synergy -- mouse and keyboard sharing utility
  * Copyright (C) 2012-2016 Symless Ltd.
  * Copyright (C) 2004 Chris Schoeneman
- * 
+ *
  * This package is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
  * found in the file LICENSE that should have accompanied this file.
- * 
+ *
  * This package is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -97,7 +97,7 @@ static const KeyEntry    s_controlKeys[] = {
     { kKeyKP_Divide,    kVK_ANSI_KeypadDivide },
     { kKeyKP_Subtract,    kVK_ANSI_KeypadMinus },
     { kKeyKP_Enter,        kVK_ANSI_KeypadEnter },
-    
+
     // virtual key 110 is fn+enter and i have no idea what that's supposed
     // to map to.  also the enter key with numlock on is a modifier but i
     // don't know which.
@@ -119,11 +119,11 @@ static const KeyEntry    s_controlKeys[] = {
     { kKeyNumLock,        s_numLockVK },
     { kKeyCapsLock,        s_capsLockVK },
 
-    // for Apple Pro JIS Keyboard, map Kana (IME activate) to Henkan (show next IME conversion), and 
+    // for Apple Pro JIS Keyboard, map Kana (IME activate) to Henkan (show next IME conversion), and
     // Eisu (IME deactivate) to Zenkaku (IME activation toggle) on Windows Japanese keyboard (OADG109A)
     { kKeyHenkan,        kVK_JIS_Kana },
     { kKeyZenkaku,        kVK_JIS_Eisu },
-    
+
     { kKeyMissionControl, s_missionControlVK },
     { kKeyLaunchpad, s_launchpadVK },
     { kKeyBrightnessUp,  s_brightnessUp },
@@ -224,7 +224,7 @@ OSXKeyState::init()
     // build virtual key map
     for (size_t i = 0; i < sizeof(s_controlKeys) / sizeof(s_controlKeys[0]);
         ++i) {
-        
+
         m_virtualKeyMap[s_controlKeys[i].m_virtualKey] =
             s_controlKeys[i].m_keyID;
     }
@@ -279,11 +279,11 @@ OSXKeyState::mapModifiersToCarbon(UInt32 mask) const
     if ((mask & kCGEventFlagMaskNumericPad) != 0) {
         outMask |= s_osxNumLock;
     }
-    
+
     return outMask;
 }
 
-KeyButton 
+KeyButton
 OSXKeyState::mapKeyFromEvent(KeyIDs& ids,
                 KeyModifierMask* maskOut, CGEventRef event) const
 {
@@ -419,7 +419,7 @@ OSXKeyState::getModifierStateAsOSXFlags() const
     if (m_superPressed) {
         modifiers |= kCGEventFlagMaskCommand;
     }
-    
+
     if (m_capsPressed) {
         modifiers |= kCGEventFlagMaskAlphaShift;
     }
@@ -465,12 +465,12 @@ OSXKeyState::pollActiveGroup() const
     AutoTISInputSourceRef keyboardLayout(TISCopyCurrentKeyboardLayoutInputSource(), CFRelease);
     CFDataRef id = (CFDataRef)TISGetInputSourceProperty(
                         keyboardLayout.get(), kTISPropertyInputSourceID);
-    
+
     GroupMap::const_iterator i = m_groupMap.find(id);
     if (i != m_groupMap.end()) {
         return i->second;
     }
-    
+
     LOG((CLOG_WARN "can't get the active group, use the first group instead"));
 
     return 0;
@@ -513,7 +513,7 @@ OSXKeyState::getKeyMap(synergy::KeyMap& keyMap)
 
         const void* resource;
         bool layoutValid = false;
-        
+
         // add regular keys
         // try uchr resource first
         TISInputSourceRef keyboardLayout = (TISInputSourceRef)CFArrayGetValueAtIndex(m_groups.get(), g);
@@ -575,7 +575,7 @@ OSXKeyState::getKeyboardEventFlags() const
     return modifiers;
 }
 
-void 
+void
 OSXKeyState::setKeyboardModifiers(CGKeyCode virtualKey, bool keyDown)
 {
     switch(virtualKey) {
@@ -840,7 +840,7 @@ OSXKeyState::mapSynergyHotKeyToMac(KeyID key, KeyModifierMask mask,
         return false;
     }
     macVirtualKey = mapKeyButtonToVirtualKey(button);
-    
+
     // calculate modifier mask
     macModifierMask = 0;
     if ((mask & KeyModifierShift) != 0) {
@@ -861,10 +861,10 @@ OSXKeyState::mapSynergyHotKeyToMac(KeyID key, KeyModifierMask mask,
     if ((mask & KeyModifierNumLock) != 0) {
         macModifierMask |= s_osxNumLock;
     }
-    
+
     return true;
 }
-                        
+
 void
 OSXKeyState::handleModifierKeys(void* target,
                 KeyModifierMask oldMask, KeyModifierMask newMask)

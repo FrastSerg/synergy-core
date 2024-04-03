@@ -15,16 +15,16 @@ ifeq (Windows,$(.TARGET_OS))
 
 else
 
-  SOURCE_DIRS += src/lib/arch/unix
+  SOURCE_DIRS += src/lib/arch/unix src/lib/synergy/unix
 
   ifeq (Darwin,$(.TARGET_OS))
-    SOURCES += src/lib/synergy/unix/AppUtilUnix.cpp 
+    SOURCES += src/lib/synergy/unix/AppUtilUnix.cpp
     SOURCES += $(wildcard src/lib/platform/OSX*.cpp)
     SOURCES += $(wildcard src/lib/platform/OSX*.m)
     SOURCES += $(wildcard src/lib/platform/OSX*.mm)
     SOURCES += src/lib/platform/IOSXKeyResource.cpp
   else
-    SOURCE_DIRS += src/lib/synergy/unix
+    SOURCE_DIRS += src/lib/synergy/X11
     SOURCES += $(wildcard src/lib/platform/XWindows*.cpp)
   endif
 
@@ -37,11 +37,11 @@ $(call .CBE.ConvertSrcNamesToObj, ./src/lib/net/InverseSockets/SslLogger.cpp): .
 #$(error $(call .CBE.ConvertSrcNamesToObj, ./src/lib/net/InverseSockets/SslLogger.cpp))
 
 $(CBE_C_PREINCLUDE): cmake/Version.cmake
-	sed -ne 's/set\s\+(\(SYNERGY_VERSION_[^ \t)]\+\)\s\+\([0-9][^)]*\).*$$/#define \1 \2/p' $^ > $@ && {  \
-	echo '#define ___cbe_V2S(x) #x'; \
-	echo '#define __cbe_V2S(x) ___cbe_V2S(x)'; \
-	echo '#define SYNERGY_VERSION __cbe_V2S(SYNERGY_VERSION_MAJOR) "." __cbe_V2S(SYNERGY_VERSION_MINOR) "." __cbe_V2S(SYNERGY_VERSION_PATCH) "." __cbe_V2S(SYNERGY_VERSION_BUILD)'; \
-	echo '#define SYNERGY_VERSION_STRING SYNERGY_VERSION'; \
-	echo '#define SSL_get_client_ciphers(x) nullptr'; } >> $@
+	sed -ne 's/set[ \t]\{1,\}(\(SYNERGY_VERSION_[^ \t)]\{1,\}\)[ \t]\{1,\}\([0-9][^)]*\).*$$/#define \1 \2/p' $^ > $@
+	echo '#define ___cbe_V2S(x) #x' >> $@
+	echo '#define __cbe_V2S(x) ___cbe_V2S(x)' >> $@
+	echo '#define SYNERGY_VERSION __cbe_V2S(SYNERGY_VERSION_MAJOR) "." __cbe_V2S(SYNERGY_VERSION_MINOR) "." __cbe_V2S(SYNERGY_VERSION_PATCH) "." __cbe_V2S(SYNERGY_VERSION_BUILD)' >> $@
+	echo '#define SYNERGY_VERSION_STRING SYNERGY_VERSION' >> $@
+	echo '#define SSL_get_client_ciphers(x) nullptr' >> $@
 
 include ~/.VSSCBE/Makefile
